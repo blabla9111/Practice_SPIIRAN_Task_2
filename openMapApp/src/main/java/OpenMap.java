@@ -4,6 +4,7 @@ import com.bbn.openmap.PropertyHandler;
 import com.bbn.openmap.gui.BasicMapPanel;
 import com.bbn.openmap.gui.MapPanel;
 import com.bbn.openmap.gui.OpenMapFrame;
+import com.bbn.openmap.gui.OverlayMapPanel;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class OpenMap {
      */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            OpenMap.create("src/main/resources/openmap.properties").showInFrame();
+            OpenMap.create("./openmap.properties").showInFrame();
         });
     }
 
@@ -111,8 +112,6 @@ public class OpenMap {
      * @param propertyHandler
      */
     private void configureMapPanel(PropertyHandler propertyHandler) {
-        BasicMapPanel basicMapPanel = new BasicMapPanel(propertyHandler, true);
-        basicMapPanel.create();
-        mapPanel = basicMapPanel;
+        mapPanel = new OverlayMapPanel(propertyHandler, false);
     }
 }
