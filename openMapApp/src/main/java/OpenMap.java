@@ -7,6 +7,7 @@ import com.bbn.openmap.gui.OpenMapFrame;
 import com.bbn.openmap.gui.OverlayMapPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.logging.Level;
@@ -23,6 +24,9 @@ public class OpenMap {
      * @param args
      */
     public static void main(String[] args) {
+        OpenMap op = new OpenMap();
+
+
         SwingUtilities.invokeLater(() -> {
             OpenMap.create("./openmap.properties").showInFrame();
         });
