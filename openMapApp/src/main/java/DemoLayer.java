@@ -3,7 +3,9 @@ import com.bbn.openmap.layer.policy.BufferedImageRenderPolicy;
 import com.bbn.openmap.omGraphics.*;
 import com.bbn.openmap.tools.drawing.DrawingTool;
 import com.bbn.openmap.tools.drawing.DrawingToolRequestor;
+import myTools.MyOMPoint;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class DemoLayer
@@ -91,6 +93,7 @@ public class DemoLayer
          * through all of the OMGraphics before they are returned.
          */
         list.generate(getProjection());
+        System.out.println("alooooo");
 
         return list;
     }
@@ -127,14 +130,18 @@ public class DemoLayer
 
         // Add a list of OMPoints.
         OMGraphicList pointList = new OMGraphicList();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1; i++) {
             OMPoint point = new OMPoint((float) (Math.random() * 89f), (float) (Math.random() * -179f), 3);
-            point.setFillPaint(Color.yellow);
-            point.setOval(true);
+            MyOMPoint myOMPoint = new MyOMPoint("Dipoint",(float) (Math.random() * 89f), (float) (Math.random() * -179f),20);
+            myOMPoint.setFillPaint(Color.MAGENTA);
+            myOMPoint.setRenderType(3);
+            myOMPoint.setOval(true);
+//            point.
             pointList.add(point);
+            pointList.add(myOMPoint);
         }
         omList.add(pointList);
-
+//        omList.add((OMGraphic) b);
         return omList;
     }
 
@@ -154,6 +161,11 @@ public class DemoLayer
     }
     @Override
     public void drawingComplete(OMGraphic omg, OMAction action) {
+        if (! (omg instanceof MyOMPoint)){
+            System.out.println("Nooooooooooooooooo!!!");
+            repaint();
+            return;
+        }
         if (!doAction(omg, action)) {
             // null OMGraphicList on failure, should only occur if
             // OMGraphic is added to layer before it's ever been
@@ -161,6 +173,19 @@ public class DemoLayer
             setList(new OMGraphicList());
             doAction(omg, action);
         }
+        MyOMPoint point = (MyOMPoint) omg;
+//        point.setFillPaint(Color.BLUE);
+        point.set(point.getX()-50,point.getY()-50);
+        point.set(point.getLat()-50,point.getLon()-50);
+        System.out.println(point.name);
+        System.out.println("@222222222");
         repaint();
+    }
+
+    @Override
+    public Component getGUI() {
+
+        System.out.println("public Component getGUI()");
+        return super.getGUI();
     }
 }
