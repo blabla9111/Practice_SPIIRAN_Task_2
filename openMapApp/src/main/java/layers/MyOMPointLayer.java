@@ -1,15 +1,17 @@
-import com.bbn.openmap.layer.OMGraphicHandlerLayer;
+package layers;
+
+import com.bbn.openmap.layer.DemoLayer;
 import com.bbn.openmap.layer.policy.BufferedImageRenderPolicy;
 import com.bbn.openmap.omGraphics.*;
 import com.bbn.openmap.tools.drawing.DrawingTool;
 import com.bbn.openmap.tools.drawing.DrawingToolRequestor;
-import myTools.MyOMPoint;
+import myOMGraphicTools.MyOMPoint;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class DemoLayer
-        extends com.bbn.openmap.layer.DemoLayer implements DrawingToolRequestor {
+public class MyOMPointLayer
+        extends DemoLayer implements DrawingToolRequestor {
 
 
     protected DrawingTool drawingTool;
@@ -37,10 +39,10 @@ public class DemoLayer
      *
      * @see #prepare
      */
-    public DemoLayer() {
+    public MyOMPointLayer() {
         // Sets the name of the layer that is visible in the GUI. Can also be
         // set with properties with the 'prettyName' property.
-        setName("Basic Layer");
+        setName("MyOMPoint Layer");
         // This is how to set the ProjectionChangePolicy, which
         // dictates how the layer behaves when a new projection is
         // received. The StandardPCPolicy is the default policy and you don't
@@ -155,16 +157,27 @@ public class DemoLayer
             if (lio != -1) {
                 classname = classname.substring(lio + 1);
             }
+            if (omg instanceof  MyOMPoint){
+                MyOMPoint point = (MyOMPoint) omg;
+                return "MyOMPoint: " + point.name+" lat:"+point.lat+" lon:"+point.lon;
+            }
 
-            return "MyDemo Layer Object: " + classname;
+            return "MyOMPoint Layer Object: " + classname;
         }
     }
     @Override
     public void drawingComplete(OMGraphic omg, OMAction action) {
-        if (! (omg instanceof MyOMPoint)){
-            System.out.println("Nooooooooooooooooo!!!");
+        if (! (omg instanceof OMPoint)){
+            JOptionPane.showMessageDialog(null, "В этом слое можно создавать объекты только OMPoint");
             repaint();
             return;
+        }
+        if (omg instanceof OMPoint && !(omg instanceof MyOMPoint)){
+            // Создан объект OMPoint, который нужно преобразовать в MyOMPoint
+            System.out.println("OMPoint");
+            OMPoint omPoint = (OMPoint) omg;
+            MyOMPoint point = new MyOMPoint("New MyOMPoint", omPoint.getLat(),omPoint.getLon(),omPoint.getRadius()+10);
+            omg = point;
         }
         if (!doAction(omg, action)) {
             // null OMGraphicList on failure, should only occur if
@@ -173,21 +186,16 @@ public class DemoLayer
             setList(new OMGraphicList());
             doAction(omg, action);
         }
+        // создание и настройка параметров отрисовки нового экземпляра MyOMPoint
         MyOMPoint point = (MyOMPoint) omg;
-        System.out.println(point.x);
-//        point.setFillPaint(Color.BLUE);
-        point.set(point.x,point.y);
-//        point.set(point.getLat(),point.getLon());
+        point.set(point.lat,point.lon);
+        point.setRadius(point.radius);
+        point.setFillPaint(Color.MAGENTA);
+        point.setRenderType(3);
+        point.setOval(true);
 
-        System.out.println(point.name);
+//        System.out.println(point.name);
         System.out.println("@222222222");
         repaint();
-    }
-
-    @Override
-    public Component getGUI() {
-
-        System.out.println("public Component getGUI()");
-        return super.getGUI();
     }
 }
