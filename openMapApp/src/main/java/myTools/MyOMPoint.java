@@ -15,6 +15,8 @@ public class MyOMPoint extends OMPoint implements OMGraphic, Serializable {
     public Double x;
     public Double y;
 
+    public int course;
+
     public int radius;
 
     public MyOMPoint(){
@@ -26,6 +28,7 @@ public class MyOMPoint extends OMPoint implements OMGraphic, Serializable {
         this.x=x;
         this.y=y;
         this.radius = radius;
+        this.course = 0;
         this.set(x,y);
 
     }

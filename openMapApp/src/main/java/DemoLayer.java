@@ -174,9 +174,11 @@ public class DemoLayer
             doAction(omg, action);
         }
         MyOMPoint point = (MyOMPoint) omg;
+        System.out.println(point.x);
 //        point.setFillPaint(Color.BLUE);
-        point.set(point.getX()-50,point.getY()-50);
-        point.set(point.getLat()-50,point.getLon()-50);
+        point.set(point.x,point.y);
+//        point.set(point.getLat(),point.getLon());
+
         System.out.println(point.name);
         System.out.println("@222222222");
         repaint();
