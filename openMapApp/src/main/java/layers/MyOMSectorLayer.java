@@ -3,15 +3,18 @@ package layers;
 import com.bbn.openmap.layer.DemoLayer;
 import com.bbn.openmap.layer.policy.BufferedImageRenderPolicy;
 import com.bbn.openmap.omGraphics.*;
+import com.bbn.openmap.proj.Length;
+import com.bbn.openmap.proj.coords.LatLonPoint;
 import com.bbn.openmap.tools.drawing.DrawingTool;
 import com.bbn.openmap.tools.drawing.DrawingToolRequestor;
 import myOMGraphicTools.MyOMPoly;
+import myOMGraphicTools.MyOMSector;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 
-public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
+public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
     protected DrawingTool drawingTool;
 
 
@@ -26,21 +29,10 @@ public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
         drawingTool = dt;
     }
 
-    /**
-     * The empty constructor is necessary for any layer being created using the
-     * openmap.properties file, via the openmap.layers property. This method
-     * needs to be public, too. Don't try to do too much in the constructor -
-     * remember, this code gets executed whether the user uses the layer or not.
-     * Performance-wise, it's better to do most initialization the first time the
-     * layer is made part of the map. You can test for that in the prepare()
-     * method, by testing whether the OMGraphicList for the layer is null or not.
-     *
-     * @see #prepare
-     */
-    public MyOMPolyLayer() {
+    public MyOMSectorLayer() {
         // Sets the name of the layer that is visible in the GUI. Can also be
         // set with properties with the 'prettyName' property.
-        setName("MyOMPoly Layer");
+        setName("MyOMSector Layer");
         // This is how to set the ProjectionChangePolicy, which
         // dictates how the layer behaves when a new projection is
         // received. The StandardPCPolicy is the default policy and you don't
@@ -51,17 +43,6 @@ public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
         setRenderPolicy(new BufferedImageRenderPolicy());
     }
 
-    /**
-     * This is an important Layer method to override. The prepare method gets
-     * called when the layer is added to the map, or when the map projection
-     * changes. We need to make sure the OMGraphicList returned from this method
-     * is what we want painted on the map. The OMGraphics need to be generated
-     * with the current projection. We test for a null OMGraphicList in the layer
-     * to see if we need to create the OMGraphics. This layer doesn't change its
-     * OMGraphics for different projections, if your layer does, you need to
-     * clear out the OMGraphicList and add the OMGraphics you want for the
-     * current projection.
-     */
     public synchronized OMGraphicList prepare() {
         OMGraphicList list = getList();
 
@@ -93,18 +74,11 @@ public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
          * through all of the OMGraphics before they are returned.
          */
         list.generate(getProjection());
-        System.out.println("alooooo Poly");
+        System.out.println("alooooo Sector");
 
         return list;
     }
 
-    /**
-     * Called from the prepare() method if the layer discovers that its
-     * OMGraphicList is null.
-     *
-     * @return new OMGraphicList with OMGraphics that you always want to display
-     *         and reproject as necessary.
-     */
     public OMGraphicList init() {
 
         // This layer keeps a pointer to an OMGraphicList that it uses
@@ -127,32 +101,15 @@ public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
 //        p2.setFillPaint(Color.CYAN);
 
 //        omList.add(p2);
-        int[] llPointsx = new int[6];
-        int[] llPointsy = new int[6];
-        llPointsy[0] = 0;
-        llPointsx[0] = 0;
-        llPointsy[1] = 10;
-        llPointsx[1] = 0;
-        llPointsy[2] = -10;
-        llPointsx[2] = 0;
-        llPointsy[3] = 20;
-        llPointsx[3] = 0;
-        llPointsy[4] = -20;
-        llPointsx[4] = 0;
-        llPointsy[5] = 0;
-        llPointsx[5] = 0;
+//        OMEllipse ellipse = new OMEllipse(new LatLonPoint.Double(60.0, -110.0), 1000.0, 300.0, Length.NM, 0.7853981852531433);
+//        ellipse.setFillPaint(Color.BLUE);
+//        ellipse.setLinePaint(Color.blue);
+////        ellipse.setRenderType(3);
+//        omList.add(ellipse);
 
-//        LabeledOMSpline spline = new LabeledOMSpline(0, 0, llPointsx, llPointsy, OMPoly.COORDMODE_ORIGIN);
-//        spline.setText("Testing");
-//        spline.setLocateAtCenter(true);
-//        spline.setLinePaint(Color.green);
-//        omList.add(spline);
-
-        MyOMPoly poly = new MyOMPoly("New Poly",llPointsx, llPointsy);
-        poly.setText("Poly");
-        poly.setLocateAtCenter(true);
-        poly.setLinePaint(Color.red);
-        omList.add(poly);
+        MyOMSector sector = new MyOMSector("New sector",160.0, -110.0, 3000.0, 600.0,  0.0);
+        sector.setFillPaint(Color.orange);
+        omList.add(sector);
 //        omList.add((OMGraphic) b);
         return omList;
     }
@@ -167,45 +124,39 @@ public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
             if (lio != -1) {
                 classname = classname.substring(lio + 1);
             }
-            if (omg instanceof MyOMPoly){
-                MyOMPoly poly = (MyOMPoly) omg;
-                return "MyOMPoly: "+poly.name;
+            if (omg instanceof MyOMSector){
+                // !!!!!!!!!!!!!!!!!!!!! РЕДАКТИРОВАТЬ
+//                MyOMPoly poly = (MyOMPoly) omg;
+                MyOMSector sector = (MyOMSector) omg;
+                return "MyOMSector: "+sector.name;
             }
 
-            return "MyOMPoint Layer Object: " + classname;
+            return "MyOMSector Layer Object: " + classname;
         }
     }
     @Override
     public void drawingComplete(OMGraphic omg, OMAction action) {
-        if (! (omg instanceof OMPoly)){
-            JOptionPane.showMessageDialog(null, "В этом слое можно создавать объекты только OMPoly");
+        if (! (omg instanceof OMCircle)){
+            JOptionPane.showMessageDialog(null, "В этом слое можно создавать объекты только OMCircle");
             repaint();
             return;
         }
         System.out.println(omg.getClass()+" cllllllllllllllllllllllass");
-        if (omg instanceof OMSpline && !(omg instanceof MyOMPoly)){
+        if (omg instanceof OMCircle && !(omg instanceof MyOMSector)){
             // Создан объект OMPoint, который нужно преобразовать в MyOMPoint
-            System.out.println("OMSpline");
-            OMSpline spline = (OMSpline) omg;
-            System.out.println(spline.getRawllpts().length);
-            System.out.println(spline.getUnits());
-            double[] rawllpts = spline.getRawllpts();
-            int rawllptsLen = rawllpts.length;
-            System.out.println(Arrays.toString(Arrays.stream(rawllpts).toArray()));
-            int[] xs = new int[rawllptsLen/2];
-            int[] ys = new int[rawllptsLen/2];
-            for(int i = 0;i<rawllptsLen/2;i++){
-                xs[i]= (int) (rawllpts[i*2]*100);
-                ys[i]=(int) (rawllpts[i*2+1]*100);
-            }
-            MyOMPoly poly = new MyOMPoly("New MyOMPoly", xs,ys);
-            poly.setText("New MyOMPoly");
-            poly.setRenderType(3);
-//        poly.setR
-            poly.setLocateAtCenter(true);
-            poly.setLinePaint(Color.red);
-            poly.setLocation(xs,ys);
-            omg = poly;
+            System.out.println("OMCircle");
+            OMCircle circle = (OMCircle) omg;
+            MyOMSector sector = new MyOMSector("New sector",circle.getCenter().getX(),circle.getCenter().getY(),1000.0,500.0,0.0);
+            sector.setCenter(new LatLonPoint.Double(sector.centerX,sector.centerY));
+            sector.setRenderType(1);
+            sector.setAxis(sector.radiusX,sector.radiusY, Length.NM);
+            sector.setRotationAngle(sector.rotateAngle);
+            sector.setFillPaint(Color.orange);
+            omg=sector;
+            System.out.println(circle.getCenter().getX());
+            System.out.println(circle.getCenter().getY());
+
+//            omg = poly;
 
 //            OMPoint omPoint = (OMPoint) omg;
 //            MyOMPoint point = new MyOMPoint("New MyOMPoint", omPoint.getLat(),omPoint.getLon(),omPoint.getRadius()+10);
@@ -226,32 +177,13 @@ public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
 //        point.setRenderType(3);
 //        point.setOval(true);
 
-        MyOMPoly poly = (MyOMPoly) omg;
-        poly.setLocation(poly.getXs(),poly.getYs());
-        poly.setRenderType(3);
-//        poly.setR
-        poly.setLocateAtCenter(true);
-        poly.setLinePaint(Color.red);
-//        poly.setVisible(true);
-//        poly.setCoordMode(0);
-//        poly.setDoShapes(true);
-//        poly.setFillPaint(Color.MAGENTA);
-//        poly.set
-//        for(int i =0;i<poly.ys.length;i++){
-//            System.out.println(poly.xs[i]+"   "+poly.ys[i]);
-//        }
-//        poly.render((Graphics) omg);
-//        System.out.println(point.name);
-//
-//        LabeledOMSpline spline = new LabeledOMSpline(0, 0, poly.xs, poly.ys, OMPoly.COORDMODE_ORIGIN);
-//        spline.setText("Testing");
-//        spline.setLocateAtCenter(true);
-//        spline.setLinePaint(Color.green);
-//
-//        omg = spline;
-//        System.out.println("Poly name "+ Arrays.toString(poly.getXs()));
-//        System.out.println("Poly name "+ Arrays.toString(poly.getYs()));
-//        omg = poly;
+        MyOMSector sector = (MyOMSector) omg;
+        // а почему это не сделать в edit?
+//        sector.setCenter(new LatLonPoint.Double(sector.centerX,sector.centerY));
+//        sector.setRenderType(1);
+//        sector.setAxis(sector.radiusX,sector.radiusY,Length.NM);
+//        sector.setRotationAngle(sector.rotateAngle);
+//        sector.setFillPaint(Color.orange);
         repaint();
     }
 }

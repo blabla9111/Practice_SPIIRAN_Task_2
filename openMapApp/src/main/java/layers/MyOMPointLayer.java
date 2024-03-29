@@ -121,14 +121,7 @@ public class MyOMPointLayer
 
         OMGraphicList omList = new OMGraphicList();
 
-        // Add an OMLine
-        OMLine line = new OMLine(40f, -145f, 42f, -70f, OMGraphic.LINETYPE_GREATCIRCLE);
-        // line.addArrowHead(true);
-        line.setStroke(new BasicStroke(2));
-        line.setLinePaint(Color.red);
-        line.putAttribute(OMGraphicConstants.LABEL, new OMTextLabeler("Line Label"));
 
-        omList.add(line);
 
         // Add a list of OMPoints.
         OMGraphicList pointList = new OMGraphicList();
