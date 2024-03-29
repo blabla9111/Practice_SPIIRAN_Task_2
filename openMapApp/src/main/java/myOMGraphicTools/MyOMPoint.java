@@ -25,7 +25,7 @@ public class MyOMPoint extends OMPoint implements OMGraphic, Serializable {
         this.lon = lon;
         this.radius = radius;
         this.course = 0;
-        this.set(x, lon);
+        this.set(lat, lon);
     }
 
 //    @Override

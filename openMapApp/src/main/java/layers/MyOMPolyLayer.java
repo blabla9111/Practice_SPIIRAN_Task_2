@@ -5,15 +5,13 @@ import com.bbn.openmap.layer.policy.BufferedImageRenderPolicy;
 import com.bbn.openmap.omGraphics.*;
 import com.bbn.openmap.tools.drawing.DrawingTool;
 import com.bbn.openmap.tools.drawing.DrawingToolRequestor;
-import myOMGraphicTools.MyOMPoint;
+import myOMGraphicTools.MyOMPoly;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
-public class MyOMPointLayer
-        extends DemoLayer implements DrawingToolRequestor {
-
-
+public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
     protected DrawingTool drawingTool;
 
 
@@ -39,10 +37,10 @@ public class MyOMPointLayer
      *
      * @see #prepare
      */
-    public MyOMPointLayer() {
+    public MyOMPolyLayer() {
         // Sets the name of the layer that is visible in the GUI. Can also be
         // set with properties with the 'prettyName' property.
-        setName("MyOMPoint Layer");
+        setName("MyOMPoly Layer");
         // This is how to set the ProjectionChangePolicy, which
         // dictates how the layer behaves when a new projection is
         // received. The StandardPCPolicy is the default policy and you don't
@@ -95,7 +93,7 @@ public class MyOMPointLayer
          * through all of the OMGraphics before they are returned.
          */
         list.generate(getProjection());
-        System.out.println("alooooo");
+        System.out.println("alooooo Poly");
 
         return list;
     }
@@ -121,34 +119,46 @@ public class MyOMPointLayer
 
         OMGraphicList omList = new OMGraphicList();
 
-        // Add an OMLine
-        OMLine line = new OMLine(40f, -145f, 42f, -70f, OMGraphic.LINETYPE_GREATCIRCLE);
-        // line.addArrowHead(true);
-        line.setStroke(new BasicStroke(2));
-        line.setLinePaint(Color.red);
-        line.putAttribute(OMGraphicConstants.LABEL, new OMTextLabeler("Line Label"));
 
-        omList.add(line);
+//        double[] llp2 = new double[] {10.0,0.0, 50.0,0.0, 50.0,20.0};
+//
+//        OMPoly p2 = new OMPoly(llp2, OMGraphic.RADIANS, OMGraphic.LINETYPE_RHUMB);
+//        p2.setLinePaint(Color.yellow);
+//        p2.setFillPaint(Color.CYAN);
 
-        // Add a list of OMPoints.
-        OMGraphicList pointList = new OMGraphicList();
-        for (int i = 0; i < 1; i++) {
-            OMPoint point = new OMPoint((float) (Math.random() * 89f), (float) (Math.random() * -179f), 3);
-            MyOMPoint myOMPoint = new MyOMPoint("Dipoint",(float) (Math.random() * 89f), (float) (Math.random() * -179f),20);
-            myOMPoint.setFillPaint(Color.MAGENTA);
-            myOMPoint.setRenderType(3);
-            myOMPoint.setOval(true);
-//            point.
-            pointList.add(point);
-            pointList.add(myOMPoint);
-        }
-        omList.add(pointList);
+//        omList.add(p2);
+        int[] llPointsx = new int[6];
+        int[] llPointsy = new int[6];
+        llPointsy[0] = 0;
+        llPointsx[0] = 0;
+        llPointsy[1] = 10;
+        llPointsx[1] = 0;
+        llPointsy[2] = -10;
+        llPointsx[2] = 0;
+        llPointsy[3] = 20;
+        llPointsx[3] = 0;
+        llPointsy[4] = -20;
+        llPointsx[4] = 0;
+        llPointsy[5] = 0;
+        llPointsx[5] = 0;
+
+//        LabeledOMSpline spline = new LabeledOMSpline(0, 0, llPointsx, llPointsy, OMPoly.COORDMODE_ORIGIN);
+//        spline.setText("Testing");
+//        spline.setLocateAtCenter(true);
+//        spline.setLinePaint(Color.green);
+//        omList.add(spline);
+
+        MyOMPoly poly = new MyOMPoly("New Poly",llPointsx, llPointsy);
+        poly.setText("Poly");
+        poly.setLocateAtCenter(true);
+        poly.setLinePaint(Color.red);
+        omList.add(poly);
 //        omList.add((OMGraphic) b);
         return omList;
     }
 
     public String getToolTipTextFor(OMGraphic omg) {
-        Object tt = omg.getAttribute("Tooltip");
+        Object tt = omg.getAttribute("Tooltip Poly");
         if (tt instanceof String) {
             return (String)tt;
         } else {
@@ -157,9 +167,9 @@ public class MyOMPointLayer
             if (lio != -1) {
                 classname = classname.substring(lio + 1);
             }
-            if (omg instanceof  MyOMPoint){
-                MyOMPoint point = (MyOMPoint) omg;
-                return "MyOMPoint: " + point.name+" lat:"+point.lat+" lon:"+point.lon;
+            if (omg instanceof MyOMPoly){
+                MyOMPoly poly = (MyOMPoly) omg;
+                return "MyOMPoly: "+poly.name;
             }
 
             return "MyOMPoint Layer Object: " + classname;
@@ -167,18 +177,39 @@ public class MyOMPointLayer
     }
     @Override
     public void drawingComplete(OMGraphic omg, OMAction action) {
-        if (! (omg instanceof OMPoint)){
-            JOptionPane.showMessageDialog(null, "В этом слое можно создавать объекты только OMPoint");
+        if (! (omg instanceof OMPoly)){
+            JOptionPane.showMessageDialog(null, "В этом слое можно создавать объекты только OMPoly");
             repaint();
             return;
         }
-
-        if (omg instanceof OMPoint && !(omg instanceof MyOMPoint)){
+        System.out.println(omg.getClass()+" cllllllllllllllllllllllass");
+        if (omg instanceof OMSpline && !(omg instanceof MyOMPoly)){
             // Создан объект OMPoint, который нужно преобразовать в MyOMPoint
-            System.out.println("OMPoint");
-            OMPoint omPoint = (OMPoint) omg;
-            MyOMPoint point = new MyOMPoint("New MyOMPoint", omPoint.getLat(),omPoint.getLon(),omPoint.getRadius()+10);
-            omg = point;
+            System.out.println("OMSpline");
+            OMSpline spline = (OMSpline) omg;
+            System.out.println(spline.getRawllpts().length);
+            System.out.println(spline.getUnits());
+            double[] rawllpts = spline.getRawllpts();
+            int rawllptsLen = rawllpts.length;
+            System.out.println(Arrays.toString(Arrays.stream(rawllpts).toArray()));
+            int[] xs = new int[rawllptsLen/2];
+            int[] ys = new int[rawllptsLen/2];
+            for(int i = 0;i<rawllptsLen/2;i++){
+                xs[i]= (int) (rawllpts[i*2]*100);
+                ys[i]=(int) (rawllpts[i*2+1]*100);
+            }
+            MyOMPoly poly = new MyOMPoly("New MyOMPoly", xs,ys);
+            poly.setText("New MyOMPoly");
+            poly.setRenderType(3);
+//        poly.setR
+            poly.setLocateAtCenter(true);
+            poly.setLinePaint(Color.red);
+            poly.setLocation(xs,ys);
+            omg = poly;
+
+//            OMPoint omPoint = (OMPoint) omg;
+//            MyOMPoint point = new MyOMPoint("New MyOMPoint", omPoint.getLat(),omPoint.getLon(),omPoint.getRadius()+10);
+//            omg = point;
         }
         if (!doAction(omg, action)) {
             // null OMGraphicList on failure, should only occur if
@@ -188,15 +219,39 @@ public class MyOMPointLayer
             doAction(omg, action);
         }
         // создание и настройка параметров отрисовки нового экземпляра MyOMPoint
-        MyOMPoint point = (MyOMPoint) omg;
-        point.set(point.lat,point.lon);
-        point.setRadius(point.radius);
-        point.setFillPaint(Color.MAGENTA);
-        point.setRenderType(3);
-        point.setOval(true);
+//        MyOMPoint point = (MyOMPoint) omg;
+//        point.set(point.lat,point.lon);
+//        point.setRadius(point.radius);
+//        point.setFillPaint(Color.MAGENTA);
+//        point.setRenderType(3);
+//        point.setOval(true);
 
+        MyOMPoly poly = (MyOMPoly) omg;
+        poly.setLocation(poly.getXs(),poly.getYs());
+        poly.setRenderType(3);
+//        poly.setR
+        poly.setLocateAtCenter(true);
+        poly.setLinePaint(Color.red);
+//        poly.setVisible(true);
+//        poly.setCoordMode(0);
+//        poly.setDoShapes(true);
+//        poly.setFillPaint(Color.MAGENTA);
+//        poly.set
+//        for(int i =0;i<poly.ys.length;i++){
+//            System.out.println(poly.xs[i]+"   "+poly.ys[i]);
+//        }
+//        poly.render((Graphics) omg);
 //        System.out.println(point.name);
-        System.out.println("@222222222");
+//
+//        LabeledOMSpline spline = new LabeledOMSpline(0, 0, poly.xs, poly.ys, OMPoly.COORDMODE_ORIGIN);
+//        spline.setText("Testing");
+//        spline.setLocateAtCenter(true);
+//        spline.setLinePaint(Color.green);
+//
+//        omg = spline;
+        System.out.println("Poly name "+ Arrays.toString(poly.getXs()));
+        System.out.println("Poly name "+ Arrays.toString(poly.getYs()));
+//        omg = poly;
         repaint();
     }
 }
