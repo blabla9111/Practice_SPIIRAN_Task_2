@@ -7,12 +7,10 @@ import com.bbn.openmap.proj.Length;
 import com.bbn.openmap.proj.coords.LatLonPoint;
 import com.bbn.openmap.tools.drawing.DrawingTool;
 import com.bbn.openmap.tools.drawing.DrawingToolRequestor;
-import myOMGraphicTools.MyOMPoly;
 import myOMGraphicTools.MyOMSector;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
     protected DrawingTool drawingTool;
@@ -153,14 +151,6 @@ public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
             sector.setRotationAngle(sector.rotateAngle);
             sector.setFillPaint(Color.orange);
             omg=sector;
-            System.out.println(circle.getCenter().getX());
-            System.out.println(circle.getCenter().getY());
-
-//            omg = poly;
-
-//            OMPoint omPoint = (OMPoint) omg;
-//            MyOMPoint point = new MyOMPoint("New MyOMPoint", omPoint.getLat(),omPoint.getLon(),omPoint.getRadius()+10);
-//            omg = point;
         }
         if (!doAction(omg, action)) {
             // null OMGraphicList on failure, should only occur if
@@ -169,21 +159,6 @@ public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
             setList(new OMGraphicList());
             doAction(omg, action);
         }
-        // создание и настройка параметров отрисовки нового экземпляра MyOMPoint
-//        MyOMPoint point = (MyOMPoint) omg;
-//        point.set(point.lat,point.lon);
-//        point.setRadius(point.radius);
-//        point.setFillPaint(Color.MAGENTA);
-//        point.setRenderType(3);
-//        point.setOval(true);
-
-        MyOMSector sector = (MyOMSector) omg;
-        // а почему это не сделать в edit?
-//        sector.setCenter(new LatLonPoint.Double(sector.centerX,sector.centerY));
-//        sector.setRenderType(1);
-//        sector.setAxis(sector.radiusX,sector.radiusY,Length.NM);
-//        sector.setRotationAngle(sector.rotateAngle);
-//        sector.setFillPaint(Color.orange);
         repaint();
     }
 }

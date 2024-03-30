@@ -1,20 +1,20 @@
 import com.bbn.openmap.Environment;
 import com.bbn.openmap.MapHandler;
 import com.bbn.openmap.PropertyHandler;
-import com.bbn.openmap.gui.BasicMapPanel;
 import com.bbn.openmap.gui.MapPanel;
 import com.bbn.openmap.gui.OpenMapFrame;
 import com.bbn.openmap.gui.OverlayMapPanel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class OpenMap {
-    /** The main panel of the application. */
+    /**
+     * The main panel of the application.
+     */
     private MapPanel mapPanel;
 
     /**
@@ -32,7 +32,9 @@ public class OpenMap {
         });
     }
 
-    /** Passes a null property handler. Use {@code create()} instead. */
+    /**
+     * Passes a null property handler. Use {@code create()} instead.
+     */
     public OpenMap() {
         this((PropertyHandler) null);
     }
@@ -79,7 +81,9 @@ public class OpenMap {
         return new PropertyHandler();
     }
 
-    /** @return the MapHandler */
+    /**
+     * @return the MapHandler
+     */
     public MapHandler getMapHandler() {
         return mapPanel.getMapHandler();
     }
