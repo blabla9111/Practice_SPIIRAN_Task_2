@@ -191,19 +191,25 @@ public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
             System.out.println(spline.getUnits());
             double[] rawllpts = spline.getRawllpts();
             int rawllptsLen = rawllpts.length;
-            System.out.println(Arrays.toString(Arrays.stream(rawllpts).toArray()));
+            System.out.println("Line coordinats "+Arrays.toString(Arrays.stream(rawllpts).toArray()));
             int[] xs = new int[rawllptsLen/2];
             int[] ys = new int[rawllptsLen/2];
             for(int i = 0;i<rawllptsLen/2;i++){
                 xs[i]= (int) (rawllpts[i*2]*100);
                 ys[i]=(int) (rawllpts[i*2+1]*100);
             }
-            MyOMPoly poly = new MyOMPoly("New MyOMPoly", xs,ys);
+            double lat=spline.getLat();
+            double lon =spline.getLon();
+            System.out.println("lat  = "+lat);
+            System.out.println("lon  = "+lon);
+            MyOMPoly poly = new MyOMPoly("New MyOMPoly",lat,lon, xs,ys);
             poly.setText("New MyOMPoly");
             poly.setRenderType(3);
 //        poly.setR
-            poly.setLocateAtCenter(true);
+//            poly.setLocateAtCenter(true);
             poly.setLinePaint(Color.red);
+            poly.setLat(lat);
+            poly.setLon(lon);
             poly.setLocation(xs,ys);
             omg = poly;
 
