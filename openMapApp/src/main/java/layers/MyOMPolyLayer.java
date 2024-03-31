@@ -233,11 +233,11 @@ public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
 //        point.setOval(true);
 
         MyOMPoly poly = (MyOMPoly) omg;
-        poly.setLocation(poly.getXs(),poly.getYs());
-        poly.setRenderType(3);
-//        poly.setR
-        poly.setLocateAtCenter(true);
-        poly.setLinePaint(Color.red);
+//        poly.setLocation(poly.getXs(),poly.getYs());
+//        poly.setRenderType(3);
+////        poly.setR
+//        poly.setLocateAtCenter(true);
+//        poly.setLinePaint(Color.red);
 //        poly.setVisible(true);
 //        poly.setCoordMode(0);
 //        poly.setDoShapes(true);

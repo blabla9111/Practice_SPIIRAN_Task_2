@@ -161,6 +161,11 @@ public class MyCustomDrawingTool extends OMDrawingTool {
             point.lon =Double.parseDouble(inputY.getText());
             point.radius=Integer.parseInt(inputRadius.getText());
             point.course=Integer.parseInt(inputCourse.getText());
+            point.set(point.lat,point.lon);
+            point.setRadius(point.radius);
+            point.setFillPaint(Color.MAGENTA);
+            point.setRenderType(3);
+            point.setOval(true);
         });
 //        input.addActionListener(e -> {
 //            JTextField source = (JTextField) e.getSource();
@@ -230,12 +235,12 @@ public class MyCustomDrawingTool extends OMDrawingTool {
             poly.setLocateAtCenter(true);
             poly.setLinePaint(Color.red);
             poly.setText(inputName.getText());
+            poly.setLocation(poly.getXs(),poly.getYs());
+            poly.setRenderType(3);
+            poly.setLocateAtCenter(true);
+            poly.setLinePaint(Color.red);
         });
 
-//        input.addActionListener(e -> {
-//            JTextField source = (JTextField) e.getSource();
-//            JOptionPane.showMessageDialog(null, "Text entered: " + source.getText());
-//        });
 
         panel.add(button);
         frame.getContentPane().add(BorderLayout.CENTER, panel);
