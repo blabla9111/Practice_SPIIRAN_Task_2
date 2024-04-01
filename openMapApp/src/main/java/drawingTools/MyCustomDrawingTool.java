@@ -21,19 +21,19 @@ public class MyCustomDrawingTool extends OMDrawingTool {
 
     @Override
     public OMGraphic edit(OMGraphic g, DrawingToolRequestor requestor, boolean showGUI) {
-        System.out.println("edit");
+//        System.out.println("edit");
         if (g instanceof MyOMPoint) {
             makeChangeObjectParamsMyOMPoint(g);
         }
         else if(g instanceof MyOMPoly){
-            System.out.println("_________"+g.getClass());
+//            System.out.println("_________"+g.getClass());
             makeChangeObjectParamsMyOMPoly(g);
         }
         else if(g instanceof MyOMSector){
-            System.out.println("_________"+g.getClass());
+//            System.out.println("_________"+g.getClass());
             makeChangeObjectParamsMyOMSector(g);
         }
-        System.out.println(g.getClass());
+//        System.out.println(g.getClass());
         return super.edit(g,requestor,showGUI);
     }
 
@@ -67,11 +67,6 @@ public class MyCustomDrawingTool extends OMDrawingTool {
         JTextField inputRotate = new JTextField(20);
         JLabel labelRotate =new JLabel("Rotate Angle");
         inputRotate.setText(String.valueOf(sector.rotateAngle));
-
-//        inputX.setText(String.valueOf(point.lat));
-//        inputY.setText(String.valueOf(point.lon));
-//        inputRadius.setText(String.valueOf(point.radius));
-//        inputCourse.setText(String.valueOf(point.course));
         JButton button = new JButton("Сохранить");
         button.addActionListener(e->{
             sector.name=inputName.getText();
@@ -85,16 +80,7 @@ public class MyCustomDrawingTool extends OMDrawingTool {
             sector.setAxis(sector.radiusX,sector.radiusY, Length.NM);
             sector.setRotationAngle(sector.rotateAngle);
             sector.setFillPaint(Color.orange);
-//            point.name=inputName.getText();
-//            point.lat=Double.parseDouble(inputX.getText());
-//            point.lon =Double.parseDouble(inputY.getText());
-//            point.radius=Integer.parseInt(inputRadius.getText());
-//            point.course=Integer.parseInt(inputCourse.getText());
         });
-//        input.addActionListener(e -> {
-//            JTextField source = (JTextField) e.getSource();
-//            JOptionPane.showMessageDialog(null, "Text entered: " + source.getText());
-//        });
         panel.add(labelName);
         panel.add(inputName);
 
@@ -121,16 +107,6 @@ public class MyCustomDrawingTool extends OMDrawingTool {
         frame.setResizable(false);
         sector.setFillPaint(Color.CYAN);
     }
-
-
-//    @Override
-//    public JPopupMenu createPopupMenu() {
-//        JPopupMenu popup =  super.createPopupMenu();
-//        popup.removeAll();
-//        popup.add(new JMenuItem("Dinara"));
-//        popup.add(new JMenuItem("Gindullina"));
-//        return popup;
-//    }
 
     public void makeChangeObjectParamsMyOMPoint(OMGraphic g){
         JFrame frame = new JFrame("Test");
@@ -163,14 +139,9 @@ public class MyCustomDrawingTool extends OMDrawingTool {
             point.course=Integer.parseInt(inputCourse.getText());
             point.set(point.lat,point.lon);
             point.setRadius(point.radius);
-            point.setFillPaint(Color.MAGENTA);
             point.setRenderType(3);
             point.setOval(true);
         });
-//        input.addActionListener(e -> {
-//            JTextField source = (JTextField) e.getSource();
-//            JOptionPane.showMessageDialog(null, "Text entered: " + source.getText());
-//        });
         panel.add(labelName);
         panel.add(inputName);
         panel.add(labelX);
@@ -188,7 +159,7 @@ public class MyCustomDrawingTool extends OMDrawingTool {
         frame.setVisible(true);
         frame.setResizable(false);
         point.setFillPaint(Color.CYAN);
-        System.out.println("dfghj");
+//        System.out.println("dfghj");
     }
 
     public void makeChangeObjectParamsMyOMPoly(OMGraphic g){
@@ -249,6 +220,6 @@ public class MyCustomDrawingTool extends OMDrawingTool {
         frame.setVisible(true);
         frame.setResizable(false);
         poly.setLinePaint(Color.CYAN);
-        System.out.println(poly.name);
+//        System.out.println(poly.name);
     }
 }

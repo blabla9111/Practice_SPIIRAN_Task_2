@@ -28,87 +28,28 @@ public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
     }
 
     public MyOMSectorLayer() {
-        // Sets the name of the layer that is visible in the GUI. Can also be
-        // set with properties with the 'prettyName' property.
         setName("MyOMSector Layer");
-        // This is how to set the ProjectionChangePolicy, which
-        // dictates how the layer behaves when a new projection is
-        // received. The StandardPCPolicy is the default policy and you don't
-        // need to set it, this method call is here to illustrate where and how
-        // you would make that call with a different policy.
         setProjectionChangePolicy(new com.bbn.openmap.layer.policy.StandardPCPolicy(this, true));
-        // Improves performance
         setRenderPolicy(new BufferedImageRenderPolicy());
     }
 
     public synchronized OMGraphicList prepare() {
         OMGraphicList list = getList();
-
-        // Here's a test to see if it's the first time that the layer has been
-        // added to the map. This list object will be whatever was returned from
-        // this method the last time prepare() was called. In this
-        // example, we always return an OMGraphicList object, so if it's null,
-        // prepare() must not have been called yet.
-
         if (list == null) {
             list = init();
         }
-
-        /*
-         * This call to the list is critical! OMGraphics need to be told where to
-         * paint themselves, and they figure that out when they are given the
-         * current Projection in the generate(Projection) call. If an OMGraphic's
-         * location is changed, it will need to be regenerated before it is
-         * rendered, otherwise it won't draw itself. You generally know you have a
-         * generate problem when OMGraphics show up with the projection changes
-         * (zooms and pans), but not at any other time after something about the
-         * OMGraphic changes.
-         *
-         * If you want to be more efficient, you can replace this call to the list
-         * as an else clause to the (list == null) check above, and call
-         * generate(Projection) on all the OMGraphics in the init() method below
-         * as you create them. This will prevent the
-         * OMGraphicList.generate(Projection) call from making an additional loop
-         * through all of the OMGraphics before they are returned.
-         */
         list.generate(getProjection());
-        System.out.println("alooooo Sector");
+//        System.out.println("alooooo Sector");
 
         return list;
     }
 
     public OMGraphicList init() {
 
-        // This layer keeps a pointer to an OMGraphicList that it uses
-        // for painting. It's initially set to null, which is used as
-        // a flag in prepare() to signal that the OMGraphcs need to be
-        // created. The list returned from prepare() gets set in the
-        // layer.
-        // This layer uses the StandardPCPolicy for new
-        // projections, which keeps the list intact and simply calls
-        // generate() on it with the new projection, and repaint()
-        // which calls paint().
-
         OMGraphicList omList = new OMGraphicList();
-
-
-//        double[] llp2 = new double[] {10.0,0.0, 50.0,0.0, 50.0,20.0};
-//
-//        OMPoly p2 = new OMPoly(llp2, OMGraphic.RADIANS, OMGraphic.LINETYPE_RHUMB);
-//        p2.setLinePaint(Color.yellow);
-//        p2.setFillPaint(Color.CYAN);
-
-//        omList.add(p2);
-//        OMEllipse ellipse = new OMEllipse(new LatLonPoint.Double(60.0, -110.0), 1000.0, 300.0, Length.NM, 0.7853981852531433);
-//        ellipse.setFillPaint(Color.BLUE);
-//        ellipse.setLinePaint(Color.blue);
-////        ellipse.setRenderType(3);
-//        omList.add(ellipse);
-
         MyOMSector sector = new MyOMSector("New sector",160.0, -110.0, 3000.0, 600.0,  0.0);
         sector.setFillPaint(Color.orange);
         omList.add(sector);
-//        omList.add((OMGraphic) b);
         return omList;
     }
 
@@ -123,8 +64,6 @@ public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
                 classname = classname.substring(lio + 1);
             }
             if (omg instanceof MyOMSector){
-                // !!!!!!!!!!!!!!!!!!!!! РЕДАКТИРОВАТЬ
-//                MyOMPoly poly = (MyOMPoly) omg;
                 MyOMSector sector = (MyOMSector) omg;
                 return "MyOMSector: "+sector.name;
             }
@@ -139,10 +78,10 @@ public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
             repaint();
             return;
         }
-        System.out.println(omg.getClass()+" cllllllllllllllllllllllass");
-        if (omg instanceof OMCircle && !(omg instanceof MyOMSector)){
+//        System.out.println(omg.getClass()+" cllllllllllllllllllllllass");
+        if (!(omg instanceof MyOMSector)){
             // Создан объект OMPoint, который нужно преобразовать в MyOMPoint
-            System.out.println("OMCircle");
+//            System.out.println("OMCircle");
             OMCircle circle = (OMCircle) omg;
             MyOMSector sector = new MyOMSector("New sector",circle.getCenter().getX(),circle.getCenter().getY(),1000.0,500.0,0.0);
             sector.setCenter(new LatLonPoint.Double(sector.centerX,sector.centerY));
@@ -159,6 +98,7 @@ public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
             setList(new OMGraphicList());
             doAction(omg, action);
         }
+        omg.setFillPaint(Color.orange);
         repaint();
     }
 }

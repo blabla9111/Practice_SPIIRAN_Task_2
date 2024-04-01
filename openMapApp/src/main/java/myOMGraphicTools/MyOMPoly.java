@@ -3,13 +3,12 @@ package myOMGraphicTools;
 import com.bbn.openmap.omGraphics.OMPoly;
 import com.bbn.openmap.omGraphics.labeled.LabeledOMSpline;
 
-import java.awt.*;
-
 public class MyOMPoly extends LabeledOMSpline {
     public String name;
     public int[] xs = null;
     public int[] ys = null;
 
+    // необходим, иначе ошибка MissingResourceException
     public MyOMPoly(){
 
     }
@@ -20,17 +19,10 @@ public class MyOMPoly extends LabeledOMSpline {
         this.xs=llPointsx;
         this.ys=llPointsy;
     }
-
-    public MyOMPoly(String newMyOMPoly, double lat, double lon, int[] xs, int[] ys) {
-        super(0, 0,xs, ys, OMPoly.COORDMODE_ORIGIN);
+    public MyOMPoly(String name, double lat, double lon, int[] xs, int[] ys) {
+        super((float) lat, (float) lon,xs, ys, OMPoly.COORDMODE_ORIGIN);
         this.name=name;
         this.xs=xs;
         this.ys=ys;
     }
-
-//    @Override
-//    public void render(Graphics g) {
-//        super.render(g);
-//        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-//    }
 }

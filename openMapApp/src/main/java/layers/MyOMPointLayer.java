@@ -15,15 +15,15 @@ public class MyOMPointLayer
 
 
     protected DrawingTool drawingTool;
+
     public DrawingTool getDrawingTool() {
-        // Usually set in the findAndInit() method.
         return drawingTool;
     }
 
     public void setDrawingTool(DrawingTool dt) {
-        // Called by the findAndInit method.
         drawingTool = dt;
     }
+
     public MyOMPointLayer() {
         setName("MyOMPoint Layer");
         setProjectionChangePolicy(new com.bbn.openmap.layer.policy.StandardPCPolicy(this, true));
@@ -36,7 +36,7 @@ public class MyOMPointLayer
             list = init();
         }
         list.generate(getProjection());
-        System.out.println("alooooo");
+//        System.out.println("alooooo");
 
         return list;
     }
@@ -46,62 +46,60 @@ public class MyOMPointLayer
      * OMGraphicList is null.
      *
      * @return new OMGraphicList with OMGraphics that you always want to display
-     *         and reproject as necessary.
+     * and reproject as necessary.
      */
     public OMGraphicList init() {
 
         OMGraphicList omList = new OMGraphicList();
 
 
-
         // Add a list of OMPoints.
         OMGraphicList pointList = new OMGraphicList();
-        for (int i = 0; i < 1; i++) {
-            OMPoint point = new OMPoint((float) (Math.random() * 89f), (float) (Math.random() * -179f), 3);
-            MyOMPoint myOMPoint = new MyOMPoint("Dipoint",(float) (Math.random() * 89f), (float) (Math.random() * -179f),20);
-            myOMPoint.setFillPaint(Color.MAGENTA);
-            myOMPoint.setRenderType(3);
-            myOMPoint.setOval(true);
-//            point.
-            pointList.add(point);
-            pointList.add(myOMPoint);
-        }
-        omList.add(pointList);
-//        omList.add((OMGraphic) b);
+
+//        OMPoint point = new OMPoint((float) (Math.random() * 89f), (float) (Math.random() * -179f), 3);
+        MyOMPoint myOMPoint = new MyOMPoint("Dipoint", (float) (Math.random() * 89f), (float) (Math.random() * -179f), 20);
+        myOMPoint.setFillPaint(Color.MAGENTA);
+        myOMPoint.setRenderType(3);
+        myOMPoint.setOval(true);
+
+        omList.add(myOMPoint);
         return omList;
     }
 
     public String getToolTipTextFor(OMGraphic omg) {
         Object tt = omg.getAttribute("Tooltip");
         if (tt instanceof String) {
-            return (String)tt;
+            return (String) tt;
         } else {
             String classname = omg.getClass().getName();
             int lio = classname.lastIndexOf(46);
             if (lio != -1) {
                 classname = classname.substring(lio + 1);
             }
-            if (omg instanceof  MyOMPoint){
+            if (omg instanceof MyOMPoint) {
                 MyOMPoint point = (MyOMPoint) omg;
-                return "MyOMPoint: " + point.name+" lat:"+point.lat+" lon:"+point.lon;
+                return "MyOMPoint: " + point.name;
             }
 
             return "MyOMPoint Layer Object: " + classname;
         }
     }
+
     @Override
     public void drawingComplete(OMGraphic omg, OMAction action) {
-        if (! (omg instanceof OMPoint)){
+        if (!(omg instanceof OMPoint)) {
             JOptionPane.showMessageDialog(null, "В этом слое можно создавать объекты только OMPoint");
             repaint();
             return;
         }
 
-        if (omg instanceof OMPoint && !(omg instanceof MyOMPoint)){
+        if ( !(omg instanceof MyOMPoint)) {
             // Создан объект OMPoint, который нужно преобразовать в MyOMPoint
-            System.out.println("OMPoint");
+//            System.out.println("OMPoint");
             OMPoint omPoint = (OMPoint) omg;
-            MyOMPoint point = new MyOMPoint("New MyOMPoint", omPoint.getLat(),omPoint.getLon(),omPoint.getRadius()+10);
+            MyOMPoint point = new MyOMPoint("New MyOMPoint", omPoint.getLat(), omPoint.getLon(), omPoint.getRadius() + 10);
+            point.setFillPaint(Color.MAGENTA);
+            point.setOval(true);
             omg = point;
         }
         if (!doAction(omg, action)) {
@@ -111,7 +109,8 @@ public class MyOMPointLayer
             setList(new OMGraphicList());
             doAction(omg, action);
         }
-        System.out.println("@222222222");
+        omg.setFillPaint(Color.MAGENTA);
+//        System.out.println("@222222222");
         repaint();
     }
 }
