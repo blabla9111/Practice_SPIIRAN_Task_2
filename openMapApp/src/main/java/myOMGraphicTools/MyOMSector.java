@@ -23,4 +23,9 @@ public class MyOMSector extends OMEllipse {
         this.radiusY = minorAxisSpan;
         this.rotateAngle = rotateAngle;
     }
+
+    public String[] getInfoAboutParams(){
+        return  new String[]{this.name, String.valueOf(this.centerX), String.valueOf(this.centerY), String.valueOf(this.radiusX), String.valueOf(this.radiusY), String.valueOf(this.rotateAngle)};
+    }
+
 }

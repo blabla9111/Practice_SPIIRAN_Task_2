@@ -23,4 +23,8 @@ public class MyOMPoint extends OMPoint implements OMGraphic, Serializable {
         this.set(lat, lon);
     }
 
+    public String[] getInfoAboutParams(){
+        return  new String[]{this.name, String.valueOf(this.lat), String.valueOf(this.lon), String.valueOf(this.radius), String.valueOf(this.course)};
+    }
+
 }
