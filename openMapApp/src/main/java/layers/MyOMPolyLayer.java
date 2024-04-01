@@ -82,7 +82,7 @@ public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
             }
             if (omg instanceof MyOMPoly) {
                 MyOMPoly poly = (MyOMPoly) omg;
-                return "MyOMPoly: " + poly.name;
+                return "MyOMPoly: " + poly.getName();
             }
 
             return "MyOMPoint Layer Object: " + classname;
