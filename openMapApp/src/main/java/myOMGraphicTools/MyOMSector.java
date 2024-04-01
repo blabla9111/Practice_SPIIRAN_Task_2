@@ -6,13 +6,13 @@ import com.bbn.openmap.proj.coords.LatLonPoint;
 
 public class MyOMSector extends OMEllipse {
 
-    public String name;
+    private String name;
 
-    public double centerX;
-    public double centerY;
-    public double radiusX;
-    public double radiusY;
-    public double rotateAngle;
+    private double centerX;
+    private double centerY;
+    private double radiusX;
+    private double radiusY;
+    private double rotateAngle;
 
     public MyOMSector(String name, double x1, double y1, double majorAxisSpan, double minorAxisSpan, double rotateAngle) {
         super(new LatLonPoint.Double(x1, y1), majorAxisSpan, minorAxisSpan, Length.NM, rotateAngle);
@@ -28,4 +28,51 @@ public class MyOMSector extends OMEllipse {
         return  new String[]{this.name, String.valueOf(this.centerX), String.valueOf(this.centerY), String.valueOf(this.radiusX), String.valueOf(this.radiusY), String.valueOf(this.rotateAngle)};
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getCenterX() {
+        return centerX;
+    }
+
+    public void setCenterX(double centerX) {
+        this.centerX = centerX;
+    }
+
+    public double getCenterY() {
+        return centerY;
+    }
+
+    public void setCenterY(double centerY) {
+        this.centerY = centerY;
+    }
+
+    public double getRadiusX() {
+        return radiusX;
+    }
+
+    public void setRadiusX(double radiusX) {
+        this.radiusX = radiusX;
+    }
+
+    public double getRadiusY() {
+        return radiusY;
+    }
+
+    public void setRadiusY(double radiusY) {
+        this.radiusY = radiusY;
+    }
+
+    public double getRotateAngle() {
+        return rotateAngle;
+    }
+
+    public void setRotateAngle(double rotateAngle) {
+        this.rotateAngle = rotateAngle;
+    }
 }

@@ -65,7 +65,7 @@ public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
             }
             if (omg instanceof MyOMSector){
                 MyOMSector sector = (MyOMSector) omg;
-                return "MyOMSector: "+sector.name;
+                return "MyOMSector: "+ sector.getName();
             }
 
             return "MyOMSector Layer Object: " + classname;
@@ -84,10 +84,10 @@ public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
 //            System.out.println("OMCircle");
             OMCircle circle = (OMCircle) omg;
             MyOMSector sector = new MyOMSector("New sector",circle.getCenter().getX(),circle.getCenter().getY(),1000.0,500.0,0.0);
-            sector.setCenter(new LatLonPoint.Double(sector.centerX,sector.centerY));
+            sector.setCenter(new LatLonPoint.Double(sector.getCenterX(), sector.getCenterY()));
             sector.setRenderType(1);
-            sector.setAxis(sector.radiusX,sector.radiusY, Length.NM);
-            sector.setRotationAngle(sector.rotateAngle);
+            sector.setAxis(sector.getRadiusX(), sector.getRadiusY(), Length.NM);
+            sector.setRotationAngle(sector.getRotateAngle());
             sector.setFillPaint(Color.orange);
             omg=sector;
         }
