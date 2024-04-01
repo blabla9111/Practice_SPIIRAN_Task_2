@@ -53,9 +53,6 @@ public class MyOMPointLayer
         OMGraphicList omList = new OMGraphicList();
 
 
-        // Add a list of OMPoints.
-        OMGraphicList pointList = new OMGraphicList();
-
 //        OMPoint point = new OMPoint((float) (Math.random() * 89f), (float) (Math.random() * -179f), 3);
         MyOMPoint myOMPoint = new MyOMPoint("Dipoint", (float) (Math.random() * 89f), (float) (Math.random() * -179f), 20);
         myOMPoint.setFillPaint(Color.MAGENTA);
