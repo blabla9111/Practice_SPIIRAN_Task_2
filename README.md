@@ -7,7 +7,7 @@
 На карте 3 слоя:
 * MyOMPointLayer – слой растровых(точечных) объектов (MyOMPoint)
     MyOMPoint 
-      * Название (name)
+    * Название (name)
       * Координаты (lat, lon)
       * Радиус (radius)
       * Курс (угол поворота)(course)
