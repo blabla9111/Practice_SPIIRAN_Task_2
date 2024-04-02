@@ -46,13 +46,13 @@ public class MyOMPointEditFrame implements EditFrame {
     private static JButton getButton(MyOMPoint point, List<MyJTextField> fields) {
         JButton button = new JButton("Сохранить");
         button.addActionListener(e -> {
-            point.name = fields.get(0).getText();
-            point.lat = fields.get(1).ckeckInput() ? Double.valueOf(fields.get(1).getText()) : point.lat;
-            point.lon = fields.get(2).ckeckInput() ? Double.parseDouble(fields.get(2).getText()) : point.lon;
-            point.radius = fields.get(3).ckeckInput() ? Integer.parseInt(fields.get(3).getText()) : point.radius;
-            point.course = fields.get(4).ckeckInput() ? Integer.parseInt(fields.get(4).getText()) : point.course;
-            point.set(point.lat, point.lon);
-            point.setRadius(point.radius);
+            point.setName(fields.get(0).getText());
+            point.setLat(fields.get(1).ckeckInput() ? Double.valueOf(fields.get(1).getText()) : point.getLat());
+            point.setLon(fields.get(2).ckeckInput() ? Double.parseDouble(fields.get(2).getText()) : point.getLon());
+            point.setRadius(fields.get(3).ckeckInput() ? Integer.parseInt(fields.get(3).getText()) : point.getRadius());
+            point.setCourse(fields.get(4).ckeckInput() ? Integer.parseInt(fields.get(4).getText()) : point.getCourse());
+            point.set(point.getLat(), point.getLon());
+            point.setRadius(point.getRadius());
             point.setRenderType(3);
             point.setOval(true);
         });
