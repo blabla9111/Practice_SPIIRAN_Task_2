@@ -47,7 +47,7 @@ public class MyOMPointEditFrame implements EditFrame {
         JButton button = new JButton("Сохранить");
         button.addActionListener(e -> {
             point.setName(fields.get(0).getText());
-            point.setLat(fields.get(1).ckeckInput() ? Double.valueOf(fields.get(1).getText()) : point.getLat());
+            point.setLat(fields.get(1).ckeckInput() ? Double.parseDouble(fields.get(1).getText()) : point.getLat());
             point.setLon(fields.get(2).ckeckInput() ? Double.parseDouble(fields.get(2).getText()) : point.getLon());
             point.setRadius(fields.get(3).ckeckInput() ? Integer.parseInt(fields.get(3).getText()) : point.getRadius());
             point.setCourse(fields.get(4).ckeckInput() ? Integer.parseInt(fields.get(4).getText()) : point.getCourse());

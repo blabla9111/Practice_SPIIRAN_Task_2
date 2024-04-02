@@ -22,22 +22,18 @@ public class MyCustomDrawingTool extends OMDrawingTool {
 
     @Override
     public OMGraphic edit(OMGraphic g, DrawingToolRequestor requestor, boolean showGUI) {
-//        System.out.println("edit");
         g.setFillPaint(Color.CYAN);
         EditFrame editFrame;
         if (g instanceof MyOMPoint) {
             editFrame = new MyOMPointEditFrame();
             editFrame.editFrame(g);
         } else if (g instanceof MyOMPoly) {
-//            System.out.println("_________"+g.getClass());
             editFrame = new MyOMPolyEditFrame();
             editFrame.editFrame(g);
         } else if (g instanceof MyOMSector) {
-//            System.out.println("_________"+g.getClass());
             editFrame = new MyOMSectorEditFrame();
             editFrame.editFrame(g);
         }
-//        System.out.println(g.getClass());
         return super.edit(g, requestor, showGUI);
     }
 }
