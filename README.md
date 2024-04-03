@@ -45,5 +45,11 @@ MyOMPoint
   ![image](https://github.com/blabla9111/Practice_SPIIRAN_Task_2/assets/92872423/21e7151a-23eb-4601-8dd9-ad8f42dcc60c)
   ![image](https://github.com/blabla9111/Practice_SPIIRAN_Task_2/assets/92872423/9f1184ea-aada-4a11-b799-2e1d5c14405b)
 
-
+## Сборка и запуск приложения
+mvn clean  
+mvn assembly:assembly  
+java -cp ./target/openMapApp-1.0-SNAPSHOT-jar-with-dependencies.jar OpenMap  
+(Появятся два окна, в одном из них отобразится нужная карта)  
+Если не получаетсся собрать через maven, то можно использовать готовый jar-файл  
+java -jar openMapApp.jar
 
