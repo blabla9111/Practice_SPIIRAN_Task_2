@@ -72,16 +72,16 @@ public class MyOMSectorEditFrame implements EditFrame {
     private static JButton getButton(MyOMSector sector, List<MyJTextField> fields) {
         JButton button = new JButton("Сохранить");
         button.addActionListener(e -> {
-            sector.setName(fields.get(0).getText());
-            sector.setCenterX(fields.get(1).ckeckInput() ? Double.parseDouble(fields.get(1).getText()) : sector.getCenterX());
-            sector.setCenterY(fields.get(2).ckeckInput() ? Double.parseDouble(fields.get(2).getText()) : sector.getCenterY());
-            sector.setRadiusX(fields.get(3).ckeckInput() ? Double.parseDouble(fields.get(3).getText()) : sector.getRadiusX());
-            sector.setRadiusY(fields.get(4).ckeckInput() ? Double.parseDouble(fields.get(4).getText()) : sector.getRadiusY());
-            sector.setRotateAngle(fields.get(5).ckeckInput() ? Double.parseDouble(fields.get(5).getText()) : sector.getRotateAngle());
-            sector.setCenter(new LatLonPoint.Double(sector.getCenterX(), sector.getCenterY()));
+            sector.name=fields.get(0).getText();
+            sector.centerX=fields.get(1).ckeckInput() ? Double.parseDouble(fields.get(1).getText()) : sector.centerX;
+            sector.centerY=fields.get(2).ckeckInput() ? Double.parseDouble(fields.get(2).getText()) : sector.centerY;
+            sector.radiusX=fields.get(3).ckeckInput() ? Double.parseDouble(fields.get(3).getText()) : sector.radiusX;
+            sector.radiusY=fields.get(4).ckeckInput() ? Double.parseDouble(fields.get(4).getText()) : sector.radiusY;
+            sector.rotateAngle=fields.get(5).ckeckInput() ? Double.parseDouble(fields.get(5).getText()) : sector.rotateAngle;
+            sector.setCenter(new LatLonPoint.Double(sector.centerX, sector.centerY));
             sector.setRenderType(1);
-            sector.setAxis(sector.getRadiusX(), sector.getRadiusY(), Length.NM);
-            sector.setRotationAngle(sector.getRotateAngle());
+            sector.setAxis(sector.radiusX, sector.radiusY, Length.NM);
+            sector.setRotationAngle(sector.rotateAngle);
             sector.setFillPaint(Color.orange);
         });
         return button;

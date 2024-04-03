@@ -91,7 +91,7 @@ public class MyOMPointLayer
             }
             if (omg instanceof MyOMPoint) {
                 MyOMPoint point = (MyOMPoint) omg;
-                return "MyOMPoint: " + point.getName();
+                return "MyOMPoint: " + point.name;
             }
 
             return "MyOMPoint Layer Object: " + classname;

@@ -43,7 +43,7 @@ public class MyOMPolyEditFrame implements EditFrame {
         JLabel labelName = new JLabel(paramList[0]);
         MyJTextField inputName = new MyJTextField(paramListDataType[0]);
         fields.add(inputName);
-        inputName.setText(poly.getName());
+        inputName.setText(poly.name);
         panel.add(labelName);
         panel.add(inputName);
 
@@ -84,7 +84,7 @@ public class MyOMPolyEditFrame implements EditFrame {
     private static JButton getButton(MyOMPoly poly, List<MyJTextField> fields) {
         JButton button = new JButton("Сохранить");
         button.addActionListener(e -> {
-            poly.setName(fields.get(0).getText());
+            poly.name=fields.get(0).getText();
             int[] xs = poly.getXs();
             int[] ys = poly.getYs();
             for (int i = 0; i < xs.length; i++) {
@@ -93,7 +93,7 @@ public class MyOMPolyEditFrame implements EditFrame {
             }
             poly.setXs(xs);
             poly.setYs(ys);
-            poly.setText(poly.getName());
+            poly.setText(poly.name);
             poly.setLocation(poly.getXs(), poly.getYs());
             poly.setRenderType(3);
             poly.setLocateAtCenter(true);
