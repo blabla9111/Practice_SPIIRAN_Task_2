@@ -49,7 +49,6 @@ public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
             list = init();
         }
         list.generate(getProjection());
-//        System.out.println("alooooo Sector");
 
         return list;
     }
