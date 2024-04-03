@@ -11,10 +11,27 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Окно для редактирования MyOMSector
+ *
+ */
 public class MyOMSectorEditFrame implements EditFrame {
+    /**
+     * Список названия параметров MyOMSector
+     *
+     */
     private final String[] paramList = {"Name", "center X", "center Y", "X-Radius", "Y-Radius", "Rotate Angle"};
+    /**
+     * Список формата параметров MyOMSector
+     *
+     */
     private final String[] paramListDataType = {"String", "double", "double", "double", "double", "double"};
 
+    /**
+     * Сделать окно для редактирования
+     *
+     * @param g  -- экземпляр OMGraphic
+     */
     @Override
     public void editFrame(OMGraphic g) {
         JFrame frame = new JFrame("Test");
@@ -44,6 +61,14 @@ public class MyOMSectorEditFrame implements EditFrame {
         frame.setResizable(false);
     }
 
+    /**
+     * Создать кнопку и добавить обработчик на неё
+     *
+     * @param sector -- экземпляр MyOMSector
+     * @param fields -- список полей
+     * @return {@link JButton}
+     * @see JButton
+     */
     private static JButton getButton(MyOMSector sector, List<MyJTextField> fields) {
         JButton button = new JButton("Сохранить");
         button.addActionListener(e -> {

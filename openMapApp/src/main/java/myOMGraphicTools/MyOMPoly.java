@@ -3,9 +3,25 @@ package myOMGraphicTools;
 import com.bbn.openmap.omGraphics.OMPoly;
 import com.bbn.openmap.omGraphics.labeled.LabeledOMSpline;
 
+/**
+ *  Полигон
+ *
+ */
 public class MyOMPoly extends LabeledOMSpline {
+    /**
+     * Имя
+     *
+     */
     public String name;
+    /**
+     * список X координат
+     *
+     */
     public int[] xs = null;
+    /**
+     * список Y координат
+     *
+     */
     public int[] ys = null;
 
     // необходим, иначе ошибка MissingResourceException

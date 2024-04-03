@@ -10,6 +10,10 @@ import myOMGraphicTools.MyOMPoint;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ *  Слой точек
+ *
+ */
 public class MyOMPointLayer
         extends DemoLayer implements DrawingToolRequestor {
 
@@ -30,6 +34,12 @@ public class MyOMPointLayer
         setRenderPolicy(new BufferedImageRenderPolicy());
     }
 
+    /**
+     * Добавление элементов в слой
+     *
+     * @return {@link OMGraphicList}
+     * @see OMGraphicList
+     */
     public synchronized OMGraphicList prepare() {
         OMGraphicList list = getList();
         if (list == null) {
@@ -42,11 +52,10 @@ public class MyOMPointLayer
     }
 
     /**
-     * Called from the prepare() method if the layer discovers that its
-     * OMGraphicList is null.
+     *  Создание изначальных элементов в слое
      *
-     * @return new OMGraphicList with OMGraphics that you always want to display
-     * and reproject as necessary.
+     * @return {@link OMGraphicList}
+     * @see OMGraphicList
      */
     public OMGraphicList init() {
 
@@ -54,7 +63,7 @@ public class MyOMPointLayer
 
 
 //        OMPoint point = new OMPoint((float) (Math.random() * 89f), (float) (Math.random() * -179f), 3);
-        MyOMPoint myOMPoint = new MyOMPoint("Dipoint", (float) (Math.random() * 89f), (float) (Math.random() * -179f), 20);
+        MyOMPoint myOMPoint = new MyOMPoint("Dipoint",  20.0, -70.0, 20);
         myOMPoint.setFillPaint(Color.MAGENTA);
         myOMPoint.setRenderType(3);
         myOMPoint.setOval(true);
@@ -63,6 +72,13 @@ public class MyOMPointLayer
         return omList;
     }
 
+    /**
+     * Получение Tool tip
+     *
+     * @param omg omg
+     * @return {@link String}
+     * @see String
+     */
     public String getToolTipTextFor(OMGraphic omg) {
         Object tt = omg.getAttribute("Tooltip");
         if (tt instanceof String) {
@@ -82,6 +98,12 @@ public class MyOMPointLayer
         }
     }
 
+    /**
+     * Отрисовка объекта
+     *
+     * @param omg omg
+     * @param action action
+     */
     @Override
     public void drawingComplete(OMGraphic omg, OMAction action) {
         if (!(omg instanceof OMPoint)) {
@@ -92,7 +114,6 @@ public class MyOMPointLayer
 
         if ( !(omg instanceof MyOMPoint)) {
             // Создан объект OMPoint, который нужно преобразовать в MyOMPoint
-//            System.out.println("OMPoint");
             OMPoint omPoint = (OMPoint) omg;
             MyOMPoint point = new MyOMPoint("New MyOMPoint", omPoint.getLat(), omPoint.getLon(), omPoint.getRadius() + 10);
             point.setFillPaint(Color.MAGENTA);
@@ -100,14 +121,10 @@ public class MyOMPointLayer
             omg = point;
         }
         if (!doAction(omg, action)) {
-            // null OMGraphicList on failure, should only occur if
-            // OMGraphic is added to layer before it's ever been
-            // on the map.
             setList(new OMGraphicList());
             doAction(omg, action);
         }
         omg.setFillPaint(Color.MAGENTA);
-//        System.out.println("@222222222");
         repaint();
     }
 }

@@ -9,7 +9,12 @@ import myOMGraphicTools.MyOMPoly;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
+/**
+ *  Слой полигонов
+ *
+ */
 public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
     protected DrawingTool drawingTool;
 
@@ -30,17 +35,28 @@ public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
         setRenderPolicy(new BufferedImageRenderPolicy());
     }
 
+    /**
+     * Добавление элементов в слой
+     *
+     * @return {@link OMGraphicList}
+     * @see OMGraphicList
+     */
     public synchronized OMGraphicList prepare() {
         OMGraphicList list = getList();
         if (list == null) {
             list = init();
         }
         list.generate(getProjection());
-//        System.out.println("alooooo Poly");
 
         return list;
     }
 
+    /**
+     * Создание изначальных элементов в слое
+     *
+     * @return {@link OMGraphicList}
+     * @see OMGraphicList
+     */
     public OMGraphicList init() {
 
 
@@ -48,16 +64,16 @@ public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
 
         int[] llPointsx = new int[6];
         int[] llPointsy = new int[6];
-        llPointsy[0] = 0;
-        llPointsx[0] = 0;
-        llPointsy[1] = 10;
-        llPointsx[1] = 20;
-        llPointsy[2] = -10;
-        llPointsx[2] = -15;
-        llPointsy[3] = 25;
-        llPointsx[3] = 60;
-        llPointsy[4] = -20;
-        llPointsx[4] = 50;
+        llPointsy[0] = 94;
+        llPointsx[0] = 67;
+        llPointsy[1] = 55;
+        llPointsx[1] = 150;
+        llPointsy[2] = 42;
+        llPointsx[2] = -2;
+        llPointsy[3] = 81;
+        llPointsx[3] = 28;
+        llPointsy[4] = 94;
+        llPointsx[4] = 67;
         llPointsy[5] = 0;
         llPointsx[5] = 0;
 
@@ -70,6 +86,13 @@ public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
         return omList;
     }
 
+    /**
+     * Получение Tool tip
+     *
+     * @param omg omg
+     * @return {@link String}
+     * @see String
+     */
     public String getToolTipTextFor(OMGraphic omg) {
         Object tt = omg.getAttribute("Tooltip Poly");
         if (tt instanceof String) {
@@ -89,6 +112,12 @@ public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
         }
     }
 
+    /**
+     * Отрисовка объекта OMPoly
+     *
+     * @param omg omg
+     * @param action action
+     */
     @Override
     public void drawingComplete(OMGraphic omg, OMAction action) {
         if (!(omg instanceof OMPoly)) {
@@ -96,10 +125,8 @@ public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
             repaint();
             return;
         }
-//        System.out.println(omg.getClass()+" cllllllllllllllllllllllass");
         if (omg instanceof OMSpline && !(omg instanceof MyOMPoly)) {
-            // Создан объект OMPoint, который нужно преобразовать в MyOMPoint
-//            System.out.println("OMSpline");
+            // Создан объект OMSpline, который нужно преобразовать в MyOMPoly
             OMSpline spline = (OMSpline) omg;
             double[] rawllpts = spline.getRawllpts();
             int rawllptsLen = rawllpts.length;
@@ -109,22 +136,25 @@ public class MyOMPolyLayer extends DemoLayer implements DrawingToolRequestor {
                 xs[i] = (int) (rawllpts[i * 2] * 100);
                 ys[i] = (int) (rawllpts[i * 2 + 1] * 100);
             }
+            System.out.println(Arrays.toString(xs));
+            System.out.println(Arrays.toString(ys));
             double lat = spline.getLat();
             double lon = spline.getLon();
-            MyOMPoly poly = new MyOMPoly("New MyOMPoly", lat, lon, xs, ys);
+            MyOMPoly poly = new MyOMPoly("New MyOMPoly", xs, ys);
             poly.setText("New MyOMPoly");
             poly.setRenderType(3);
+            poly.setLocateAtCenter(true);
             poly.setFillPaint(Color.pink);
             poly.setLinePaint(Color.red);
-            poly.setLat(lat);
-            poly.setLon(lon);
-            poly.setLocation(xs, ys);
+//            poly.setFillPaint(Color.pink);
+//            poly.setLinePaint(Color.red);
+////            poly.setLat(lat);
+////            poly.setLon(lon);
+//            poly.setLocation(xs, ys);
+//            poly.setLocateAtCenter(true);
             omg = poly;
         }
         if (!doAction(omg, action)) {
-            // null OMGraphicList on failure, should only occur if
-            // OMGraphic is added to layer before it's ever been
-            // on the map.
             setList(new OMGraphicList());
             doAction(omg, action);
         }

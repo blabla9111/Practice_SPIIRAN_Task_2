@@ -5,12 +5,36 @@ import com.bbn.openmap.omGraphics.OMPoint;
 
 import java.io.Serializable;
 
+/**
+ *  Растровый (точечный) объект
+ *
+ */
 public class MyOMPoint extends OMPoint implements OMGraphic, Serializable {
 
+    /**
+     * Имя
+     *
+     */
     public String name;
+    /**
+     * широта
+     *
+     */
     public Double lat;
+    /**
+     * долгота
+     *
+     */
     public Double lon;
+    /**
+     * Курс
+     *
+     */
     public int course;
+    /**
+     * Радиус (для отрисовки)
+     *
+     */
     public int radius;
 
     public MyOMPoint(String name, double lat, double lon, int radius) {

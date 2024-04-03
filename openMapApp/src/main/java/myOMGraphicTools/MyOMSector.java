@@ -4,14 +4,42 @@ import com.bbn.openmap.omGraphics.OMEllipse;
 import com.bbn.openmap.proj.Length;
 import com.bbn.openmap.proj.coords.LatLonPoint;
 
+/**
+ *  Сектор
+ *
+ */
 public class MyOMSector extends OMEllipse {
 
+    /**
+     * Имя
+     *
+     */
     public String name;
 
+    /**
+     * Координата X центра
+     *
+     */
     public double centerX;
+    /**
+     * Координата Y центра
+     *
+     */
     public double centerY;
+    /**
+     * Координата X  радиуса
+     *
+     */
     public double radiusX;
+    /**
+     *  Координата Y радиуса
+     *
+     */
     public double radiusY;
+    /**
+     * Угол поворота
+     *
+     */
     public double rotateAngle;
 
     public MyOMSector(String name, double x1, double y1, double majorAxisSpan, double minorAxisSpan, double rotateAngle) {

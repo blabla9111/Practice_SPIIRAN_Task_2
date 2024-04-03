@@ -9,10 +9,27 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *   Окно для редактирования MyOMPoly
+ *
+ */
 public class MyOMPolyEditFrame implements EditFrame {
+    /**
+     * Список названия параметров MyOMPoly
+     *
+     */
     private final String[] paramList = {"Name", "X_", "Y_"};
+    /**
+     * Список формата параметров MyOMPoly
+     *
+     */
     private final String[] paramListDataType = {"String", "int", "int"};
 
+    /**
+     * Сделать окно для редактирования
+     *
+     * @param g  -- экземпляр OMGraphic
+     */
     @Override
     public void editFrame(OMGraphic g) {
         JFrame frame = new JFrame("Edit");
@@ -56,6 +73,14 @@ public class MyOMPolyEditFrame implements EditFrame {
         frame.setResizable(false);
     }
 
+    /**
+     * Создать кнопку и добавить обработчик на неё
+     *
+     * @param poly -- экземпляр MyOMPoly
+     * @param fields -- список полей
+     * @return {@link JButton}
+     * @see JButton
+     */
     private static JButton getButton(MyOMPoly poly, List<MyJTextField> fields) {
         JButton button = new JButton("Сохранить");
         button.addActionListener(e -> {

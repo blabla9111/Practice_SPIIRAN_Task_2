@@ -12,6 +12,10 @@ import myOMGraphicTools.MyOMSector;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ *  Слой секторов
+ *
+ */
 public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
     protected DrawingTool drawingTool;
 
@@ -33,6 +37,12 @@ public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
         setRenderPolicy(new BufferedImageRenderPolicy());
     }
 
+    /**
+     * Добавление элементов в слой
+     *
+     * @return {@link OMGraphicList}
+     * @see OMGraphicList
+     */
     public synchronized OMGraphicList prepare() {
         OMGraphicList list = getList();
         if (list == null) {
@@ -44,6 +54,12 @@ public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
         return list;
     }
 
+    /**
+     * Создание изначальных элементов в слое
+     *
+     * @return {@link OMGraphicList}
+     * @see OMGraphicList
+     */
     public OMGraphicList init() {
 
         OMGraphicList omList = new OMGraphicList();
@@ -53,6 +69,13 @@ public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
         return omList;
     }
 
+    /**
+     * Получение Tool tip
+     *
+     * @param omg omg
+     * @return {@link String}
+     * @see String
+     */
     public String getToolTipTextFor(OMGraphic omg) {
         Object tt = omg.getAttribute("Tooltip Poly");
         if (tt instanceof String) {
@@ -71,6 +94,12 @@ public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
             return "MyOMSector Layer Object: " + classname;
         }
     }
+    /**
+     * Отрисовка объекта MyOMSector
+     *
+     * @param omg omg
+     * @param action action
+     */
     @Override
     public void drawingComplete(OMGraphic omg, OMAction action) {
         if (! (omg instanceof OMCircle)){
@@ -78,23 +107,18 @@ public class MyOMSectorLayer extends DemoLayer implements DrawingToolRequestor {
             repaint();
             return;
         }
-//        System.out.println(omg.getClass()+" cllllllllllllllllllllllass");
         if (!(omg instanceof MyOMSector)){
-            // Создан объект OMPoint, который нужно преобразовать в MyOMPoint
-//            System.out.println("OMCircle");
+            // Создан объект OMCircle, который нужно преобразовать в MyOMSector
             OMCircle circle = (OMCircle) omg;
             MyOMSector sector = new MyOMSector("New sector",circle.getCenter().getX(),circle.getCenter().getY(),1000.0,500.0,0.0);
-            sector.setCenter(new LatLonPoint.Double(sector.centerX,sector.centerY));
+//            sector.setCenter(new LatLonPoint.Double(sector.centerX,sector.centerY));
             sector.setRenderType(1);
-            sector.setAxis(sector.radiusX,sector.radiusY, Length.NM);
-            sector.setRotationAngle(sector.rotateAngle);
+//            sector.setAxis(sector.radiusX,sector.radiusY, Length.NM);
+//            sector.setRotationAngle(sector.rotateAngle);
             sector.setFillPaint(Color.orange);
             omg=sector;
         }
         if (!doAction(omg, action)) {
-            // null OMGraphicList on failure, should only occur if
-            // OMGraphic is added to layer before it's ever been
-            // on the map.
             setList(new OMGraphicList());
             doAction(omg, action);
         }

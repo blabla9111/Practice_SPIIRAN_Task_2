@@ -9,12 +9,29 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  Окно для редактирования MyOMPoint
+ *
+ */
 public class MyOMPointEditFrame implements EditFrame {
 
+    /**
+     * Список названия параметров MyOMPoint
+     *
+     */
     private final String[] paramList = {"Name", "Lat", "Lon", "Radius", "Course"};
+    /**
+     * Список формата параметров MyOMPoint
+     *
+     */
     private final String[] paramListDataType = {"String", "double", "double", "int", "int"};
 
-    //    @Override
+    /**
+     * Сделать окно для редактирования
+     *
+     * @param g  -- экземпляр OMGraphic
+     */
+    @Override
     public void editFrame(OMGraphic g) {
         JFrame frame = new JFrame("Edit");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -43,6 +60,14 @@ public class MyOMPointEditFrame implements EditFrame {
         frame.setResizable(false);
     }
 
+    /**
+     * Создать кнопку и добавить обработчик на неё
+     *
+     * @param point -- экземпляр MyOMPoint
+     * @param fields -- список полей
+     * @return {@link JButton}
+     * @see JButton
+     */
     private static JButton getButton(MyOMPoint point, List<MyJTextField> fields) {
         JButton button = new JButton("Сохранить");
         button.addActionListener(e -> {

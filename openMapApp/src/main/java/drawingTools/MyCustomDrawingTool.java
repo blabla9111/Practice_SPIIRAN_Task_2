@@ -13,6 +13,10 @@ import myOMGraphicTools.MyOMSector;
 
 import java.awt.*;
 
+/**
+ *  Класс для управления редактированием объектов
+ *
+ */
 public class MyCustomDrawingTool extends OMDrawingTool {
 
     public MyCustomDrawingTool() {
@@ -20,24 +24,29 @@ public class MyCustomDrawingTool extends OMDrawingTool {
         setBehaviorMask(OMDrawingTool.QUICK_CHANGE_BEHAVIOR_MASK);
     }
 
+    /**
+     * Метод вызывается после нажатия на объект (редактирование объекта)
+     *
+     * @param g -- экземпляр OMGraphic
+     * @param requestor -- экземпляр DrawingToolRequestor
+     * @param showGUI boolean
+     * @return {@link OMGraphic}
+     * @see OMGraphic
+     */
     @Override
     public OMGraphic edit(OMGraphic g, DrawingToolRequestor requestor, boolean showGUI) {
-//        System.out.println("edit");
         g.setFillPaint(Color.CYAN);
         EditFrame editFrame;
         if (g instanceof MyOMPoint) {
             editFrame = new MyOMPointEditFrame();
             editFrame.editFrame(g);
         } else if (g instanceof MyOMPoly) {
-//            System.out.println("_________"+g.getClass());
             editFrame = new MyOMPolyEditFrame();
             editFrame.editFrame(g);
         } else if (g instanceof MyOMSector) {
-//            System.out.println("_________"+g.getClass());
             editFrame = new MyOMSectorEditFrame();
             editFrame.editFrame(g);
         }
-//        System.out.println(g.getClass());
         return super.edit(g, requestor, showGUI);
     }
 }

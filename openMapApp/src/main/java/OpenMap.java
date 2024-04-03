@@ -13,13 +13,12 @@ import java.util.logging.Logger;
 
 public class OpenMap {
     /**
-     * The main panel of the application.
+     * Главная панель приложения
      */
     private MapPanel mapPanel;
 
     /**
-     * Schedule creation of this application's GUI in the event-dispatching
-     * thread.
+     * Точка входа в приложение
      *
      * @param args
      */
@@ -33,14 +32,14 @@ public class OpenMap {
     }
 
     /**
-     * Passes a null property handler. Use {@code create()} instead.
+     * Настройка без обработчика
      */
     public OpenMap() {
         this((PropertyHandler) null);
     }
 
     /**
-     * Configures the map pane with this property handler.
+     * Настройка панели с обработчиком
      *
      * @param propertyHandler
      */
@@ -49,7 +48,7 @@ public class OpenMap {
     }
 
     /**
-     * Factory method.
+     * создание OpenMap через файл конфигурации
      *
      * @param propertiesFile path to {@code openmap.properties}
      * @return new {@code OpenMap} instance
@@ -59,11 +58,7 @@ public class OpenMap {
     }
 
     /**
-     * Given a path to a properties file, try to configure a
-     * {@code PropertyHandler} with it. If the properties file is not valid, the
-     * returned {@code PropertyHandler} will look for the
-     * {@code openmap.properties} file in the classpath and the user's home
-     * directory.
+     * Создание обработчика через файл конфигурации
      *
      * @param propertiesFile path to {@code openmap.properties}
      * @return the respective {@code PropertyHandler} or an empty one if an
@@ -89,8 +84,7 @@ public class OpenMap {
     }
 
     /**
-     * If there is no {@code OpenMapFrame} specified in the properties file, we
-     * need to create one and configure it from the current properties.
+     * Создание окна приложения
      */
     private void showInFrame() {
         MapHandler mapHandler = getMapHandler();
@@ -112,10 +106,7 @@ public class OpenMap {
     }
 
     /**
-     * Creates the components in the main application thread. If any of these
-     * components need to update their GUI, they should pass a {@code Runnable}
-     * object to the {@code SwingUtilities.invokeLater(Runnable)} method, and it
-     * will be updated accordingly.
+     * Создание главной панели приложения
      *
      * @param propertyHandler
      */
